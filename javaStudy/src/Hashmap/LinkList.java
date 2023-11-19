@@ -4,121 +4,86 @@ package Hashmap;
 public class LinkList {
 
     private Node head = new Node();  //定义头节点，此节点不存放数据
-    int size = 0;
-    //直接在末尾添加键值对
-    public Node add(Object key, Object value){
-        Node r = head;
-        while (r.next != null) {
-            r = r.next;
+
+    public int len = 0;
+
+    public void Insert(Object key, Object value){
+        Node curr = head;
+        while (curr.next != null){
+            curr = curr.next;
         }
         Node p = new Node(key, value);
-        p.next = null;
-        r.next = p;
-        return head;
+        curr.next = p;
+        len++;
     }
 
-    //选定位置添加键值对
-    public Node loAdd(Object key, Object value, int index) {
-        if (index < 0 || index > size()) {
-            System.out.println("ERROR! There's no such location.");
-            return null; // 不再返回值，直接返回
+    public void Delete(){
+        if(len > 0) {
+            Node curr = head;
+            while (curr.next.next != null) {
+                curr = curr.next;
+            }
+            curr.next = null;
+            len--;
         }
-        Node r = head.next;
-        int i = 0;
-        while (r.next != null && i < index - 1) {
-            r = r.next;
-            i++;
+        else {
+            System.out.println("Hashmap is empty.");
         }
-        Node p = new Node(key, value);
-        p.next = r.next;
-        r.next = p;
-        return head;
     }
 
-    //删除末位节点
-    public Node deleteNode(){
-        if (head == null || head.next == null) {
-            System.out.println("There's only one Node or no Node.");
-            return null; // 处理链表为空或只有一个节点的情况
+    public void Delete(Object key){
+        Node curr = head;
+        while (curr.next != null && curr.next.key != key){
+            curr = curr.next;
         }
-        Node r = head;
-        while (r.next.next!=null){
-            r=r.next;
+        if(curr.next == null && curr.key != key){
+            System.out.println("no such key");
         }
-        r.next=null;
-        size--;
-        return head;
+        if(curr.next != null && curr.next.key == key){
+            curr.next = curr.next.next;
+            len--;
+        }
     }
 
-    //删除指定位置节点
-    public Node loDeleteNode(int index){
-        if(index<0||index>=size()){
-            System.out.println("There's no such location.");
+    public Object Search(Object key){
+        Node curr = head;
+        while (curr != null && curr.key != key){
+            curr = curr.next;
+        }
+        if(curr == null){
+            System.out.println("no such key");
             return null;
-        }
-        Node r = head;
-        int i = 0;
-        while (r.next!=null&&i<index-1){
-            r=r.next;
-            i++;
-        }
-        Node p = r.next;
-        r.next=p.next;
-        size--;
-        return head;
-    }
-
-    // 获取指定键对应的值
-    public Node get(int index) {
-        Node p = head.next;
-        int i = 0;
-        while (p != null && i < index) {
-            p = p.next;
-            i++;
-        }
-        return p; // 返回指定位置的节点
-    }
-
-
-    //返回链表长度
-    public int size(){
-        Node r = head.next;
-        size = 0;
-        while (r!=null){
-            r=r.next;
-            size++;
-        }
-        return size;
-    }
-
-    //输出链表所有内容
-    public void printLinkList(){
-        Node p = head.next;
-        int i = 0;
-        while (p!=null&&i<=size()){
-            if(p.key==null&&p.value==null){
-                System.out.println(i+" <null, null>");
-            }
-            else {
-                System.out.println(i+" <"+p.key+", "+p.value+">");
-            }
-            p=p.next;
-            i++;
+        } else {
+            System.out.println("value:"+curr.value);
+            return curr.value;
         }
     }
 
-    //输出指定位置内容
-    public void printLink(int index){
-        if(index<0||index>size()){
-            System.out.println("no such location.");
-            return;
+    public void Traversal(){
+        Node curr = head.next;
+        if(curr == null){
+            System.out.print("Hashmap is empty.");
         }
-        Node p =head.next;
-        int i = 0;
-        while (p.next!=null&&i<index){
-            p=p.next;
-            i++;
+        while (curr != null){
+            System.out.print("<key:"+ curr.key+" value:"+curr.value+"> ");
+            curr = curr.next;
         }
-        System.out.println("<"+p.key+", "+p.value+">");
+    }
+
+    public int GetLength(){
+        return len;
+    }
+
+    public class Node {
+        public Object key;
+        public Object value;
+        public Node next;
+        public Node(Object key, Object value){
+            this.key = key;
+            this.value = value;
+        }
+        public Node(){
+
+        }
     }
 }
