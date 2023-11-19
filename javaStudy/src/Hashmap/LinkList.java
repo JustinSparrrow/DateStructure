@@ -11,6 +11,10 @@ public class LinkList {
         Node curr = head;
         while (curr.next != null){
             curr = curr.next;
+            if(curr.key == key){
+                curr.value = value;
+                return;
+            }
         }
         Node p = new Node(key, value);
         curr.next = p;
