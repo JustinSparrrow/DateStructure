@@ -73,6 +73,38 @@ class Hashmap{
 ## 3. 哈希表的构建过程
 把2中提到的类成员函数补齐即可，具体代码见对应的java文件。  
 
+此处主要解释数组中的函数方法：
+- 需要定义的类成员对象：
+```java
+private LinkList[] linkListArr;     //创建数组对象
+private int size;                   //数组长度（人为规定）
+```
+- 构造函数初始化哈希表：
+```java
+public MHashMap(int size){
+    this.size=size;                         //固定数组长度
+    linkListArr = new LinkList[size];       //给数组对象分配内存
+    for (int i = 0; i < size; i++) {
+        linkListArr[i] = new LinkList();    //每个数组位置上建立一个链表对象用来初始化链表的根节点
+    }
+}
+```
+- 散列函数：
+```java
+public int hash(Object key){
+    return key.hashCode() % size;       //此处的哈希码就是每个字符的ASCII码值相加然后对数组长度取模
+}
+```
+- 增加键值对：
+```java
+public void put(Object key, Object value){
+    int index = hash(key);                      //哈希映射到数组的位置
+    LinkList link = linkListArr[index];         //在数组处创立一个新的link对象
+    link.Insert(key,value);                     //调用插入链表节点函数
+}
+```
+其他函数与增加键值对类似，均是通过哈希映射找到相应位置然后创建链表对象调用链表节点中相应的方法即可。
+
 ---
 ## 4. 散列函数
 ### 哈希码  
