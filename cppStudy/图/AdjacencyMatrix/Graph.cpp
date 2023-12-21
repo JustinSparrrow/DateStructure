@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 struct Graph{
@@ -10,6 +11,8 @@ struct Graph{
     vector<vector<int>> arcs;   //邻接矩阵
     int vexNum;     //顶点数量
     int arcNUm;     //边数量
+
+    vector<bool> visited;
 };
 
 Graph* initGraph(int vexNum){
@@ -22,6 +25,8 @@ Graph* initGraph(int vexNum){
 
     G->vexNum = vexNum;
     G->arcNUm = 0;
+
+    G->visited.resize(vexNum, false);
 
     return G;
 }
@@ -42,9 +47,49 @@ void createGraph(Graph* G, vector<char>* vexs, vector<vector<int>>* arcs){
     G->arcNUm /= 2;
 }
 
-void DFS(Graph* G, int* visited, int index){
-    cout << G->vexs[index] << '\t';
+void BFS(Graph *G, char v){
+    queue<char> Q;
+    cout << v << '\t';
+    int index = -1;
+    for(int i = 0; i < G->vexNum; ++i){
+        if(G->vexs[i] == v){
+            index = i;
+            break;
+        }
+    }
+    if(index != -1){
+        Q.push(v);
+        G->visited[index] = true;
+        while (!Q.empty()){
+            char front = Q.front();
+            Q.pop();
+            for(int i = 0; i < G->vexNum; ++i){
+                if(G->arcs[index][i] != 0 && !G->visited[i]){
+                    cout << G->vexs[i] << '\t';
+                    Q.push(G->vexs[i]);
+                    G->visited[i] = true;
+                }
+            }
+        }
+    }
+}
 
+void BFSTraverse(Graph *G){
+    for(int i = 0; i < G->vexNum; ++i){
+        G->visited[i] = false;
+    }
+    queue<char> Q;
+    for(int i = 0; i < G->vexNum; ++i){
+        if(!G->visited[i]){
+            Q.push(G->vexs[i]);
+            G->visited[i] = true;
+            while ((!Q.empty())){
+                char v = Q.front();
+                Q.pop();
+                BFS(G,v);
+            }
+        }
+    }
 }
 
 int main(){
@@ -58,4 +103,7 @@ int main(){
             {0,1,0,1,0}
     };
     createGraph(G, &vexs, &arcs);
+    BFSTraverse(G);
+
+    deleteGraph(G);
 }
