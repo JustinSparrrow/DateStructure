@@ -1,0 +1,3 @@
+/Users/moqi/Desktop/学习/数据结构/Prim/cmake-build-debug/CMakeFiles/Prim.dir
+/Users/moqi/Desktop/学习/数据结构/Prim/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/moqi/Desktop/学习/数据结构/Prim/cmake-build-debug/CMakeFiles/rebuild_cache.dir
