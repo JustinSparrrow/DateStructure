@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/moqi/Desktop/学习/DateStructure/myStudy/luogu",
+      "program": "/Users/moqi/Desktop/学习/DateStructure/myStudy/luogu/build/Debug/outDebug"
+    }
+  ]
+}
